@@ -1,0 +1,32 @@
+import { NextRequest, NextResponse } from 'next/server';
+
+const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:4000';
+
+export async function GET(request: NextRequest) {
+  try {
+    const response = await fetch(`${BACKEND_URL}/api/stats`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Backend API error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return NextResponse.json(data);
+    
+  } catch (error) {
+    console.error('Error fetching stats:', error);
+    
+    return NextResponse.json(
+      { 
+        message: 'Failed to fetch stats',
+        error: error instanceof Error ? error.message : 'Unknown error'
+      },
+      { status: 500 }
+    );
+  }
+}
