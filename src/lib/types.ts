@@ -196,3 +196,13 @@ export interface SuggestedQuestionProps {
     question: string;
     onClick: (question: string) => void;
 }
+
+export interface PlanetCardProps {
+    planet: NormalizedPlanet;
+    onClick: (planet: NormalizedPlanet) => void;
+}
+
+export interface PlanetDetailModalProps {
+    planet: NormalizedPlanet | null;
+    onClose: () => void;
+}
