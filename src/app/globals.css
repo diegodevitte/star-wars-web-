@@ -1,26 +1,143 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --space-black: #0b1020;
+  --imperial-slate: #111827;
+  --deep-slate: #0f172a;
+  --border-main: #1f2937;
+  --text-primary: #e5e7eb;
+  --text-secondary: #94a3b8;
+  --lightsaber-blue: #60a5fa;
+  --droid-teal: #2dd4bf;
+  --sith-red: #f87171;
+  --credits-gold: #fbbf24;
+  --background: var(--space-black);
+  --foreground: var(--text-primary);
+  --card: var(--imperial-slate);
+  --card-foreground: var(--text-primary);
+  --popover: var(--deep-slate);
+  --popover-foreground: var(--text-primary);
+  --primary: var(--lightsaber-blue);
+  --primary-foreground: #0b1020;
+  --secondary: #1f2937;
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--imperial-slate);
+  --muted-foreground: var(--text-secondary);
+  --accent: var(--droid-teal);
+  --accent-foreground: #0b1020;
+  --destructive: var(--sith-red);
+  --destructive-foreground: var(--text-primary);
+  --border: var(--border-main);
+  --radius: 0.875rem;
+  --input: var(--border-main);
+  --ring: var(--lightsaber-blue);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  --background: var(--space-black);
+  --foreground: var(--text-primary);
+  --card: var(--imperial-slate);
+  --card-foreground: var(--text-primary);
+  --popover: var(--deep-slate);
+  --popover-foreground: var(--text-primary);
+  --primary: var(--lightsaber-blue);
+  --primary-foreground: #0b1020;
+  --secondary: #1f2937;
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--imperial-slate);
+  --muted-foreground: var(--text-secondary);
+  --accent: var(--droid-teal);
+  --accent-foreground: #0b1020;
+  --destructive: var(--sith-red);
+  --destructive-foreground: var(--text-primary);
+  --border: var(--border-main);
+  --input: var(--border-main);
+  --ring: var(--lightsaber-blue);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: hsl(var(--border));
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: hsl(var(--foreground));
+  background: hsl(var(--background));
+  font-feature-settings:
+    "rlig" 1,
+    "calt" 1;
+  font-family: "Inter", sans-serif;
+}
+
+.space-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: url("/backgrounds/background.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.space-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      1200px 600px at 20% 0%,
+      rgba(96, 165, 250, 0.12),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 500px at 80% 20%,
+      rgba(45, 212, 191, 0.08),
+      transparent 55%
+    ),
+    linear-gradient(180deg, rgba(11, 16, 32, 0.3), rgba(11, 16, 32, 0.5));
+  z-index: 1;
+}
+
+.space-background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      1px 1px at 20px 30px,
+      rgba(255, 255, 255, 0.15),
+      transparent
+    ),
+    radial-gradient(
+      1px 1px at 40px 70px,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    ),
+    radial-gradient(
+      1px 1px at 90px 40px,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    ),
+    radial-gradient(
+      1px 1px at 130px 80px,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    ),
+    radial-gradient(
+      1px 1px at 160px 30px,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: sparkle 60s linear infinite;
+}
+
+@keyframes sparkle {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100px);
+  }
 }
