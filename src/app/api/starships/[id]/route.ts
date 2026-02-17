@@ -2,18 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:4000';
 
-interface RouteParams {
-  params: {
-    id: string;
-  };
-}
-
 export async function GET(
   request: NextRequest,
-  { params }: RouteParams
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     if (!/^\d+$/.test(id)) {
       return NextResponse.json(
@@ -37,7 +31,7 @@ export async function GET(
     return NextResponse.json(data);
     
   } catch (error) {
-    console.error(`Error fetching starship ${params.id}:`, error);
+    console.error(`Error fetching starship:`, error);
     
     return NextResponse.json(
       { 
