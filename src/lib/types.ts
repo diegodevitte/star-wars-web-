@@ -178,3 +178,21 @@ export interface PersonDetailModalProps {
     person: NormalizedPerson | null;
     onClose: () => void;
 }
+
+export interface Message {
+    id: string;
+    role: 'user' | 'assistant';
+    content: string;
+    timestamp: Date;
+    actions?: ChatAction[];
+    sources?: ChatSource[];
+}
+
+export interface MessageBubbleProps {
+    message: Message;
+}
+
+export interface SuggestedQuestionProps {
+    question: string;
+    onClick: (question: string) => void;
+}
