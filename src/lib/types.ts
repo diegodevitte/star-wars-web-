@@ -139,3 +139,32 @@ export interface ParsedIntent {
   query: string;
   confidence: number;
 }
+
+export interface DashboardStats {
+  people: number;
+  planets: number;
+  starships: number;
+  vehicles: number;
+}
+
+export interface Character {
+  id: string;
+  name: string;
+  height: string;
+  homeworld: string;
+}
+
+export interface Planet {
+  id: string;
+  name: string;
+  climate: string;
+  terrain: string;
+  description: string;
+}
+
+export interface Starship {
+  id: string;
+  name: string;
+  model: string;
+  manufacturer: string;
+}
