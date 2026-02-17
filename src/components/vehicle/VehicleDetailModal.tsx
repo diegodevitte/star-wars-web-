@@ -1,0 +1,111 @@
+'use client';
+
+import React from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Car, Truck } from 'lucide-react';
+import { VehicleDetailModalProps } from '@/lib/types';
+
+export default function VehicleDetailModal({ vehicle, onClose }: VehicleDetailModalProps) {
+    if (!vehicle) return null;
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+            <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
+            <Card className="card-galactic p-6 max-w-4xl w-full mx-4 relative z-10 max-h-[90vh] overflow-y-auto">
+                <div className="flex items-center justify-between mb-6">
+                    <div>
+                        <h2 className="text-2xl font-bold text-[#E5E7EB]">{vehicle.name}</h2>
+                        <p className="text-[#94A3B8] mt-1">{vehicle.model}</p>
+                    </div>
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={onClose}
+                        className="text-[#94A3B8] hover:text-[#E5E7EB]"
+                    >
+                        ✕
+                    </Button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="space-y-4">
+                        <div>
+                            <h3 className="text-lg font-semibold text-[#60A5FA] mb-3 flex items-center">
+                                <Car className="w-5 h-5 mr-2" />
+                                Basic Info
+                            </h3>
+                            <div className="space-y-3">
+                                <div>
+                                    <span className="text-sm text-[#94A3B8] block">Manufacturer</span>
+                                    <span className="text-[#E5E7EB] font-medium">{vehicle.manufacturer}</span>
+                                </div>
+                                <div>
+                                    <span className="text-sm text-[#94A3B8] block">Class</span>
+                                    <span className="text-[#E5E7EB] font-medium">{vehicle.vehicle_class}</span>
+                                </div>
+                                <div>
+                                    <span className="text-sm text-[#94A3B8] block">Length</span>
+                                    <span className="text-[#E5E7EB] font-medium">{vehicle.length} meters</span>
+                                </div>
+                                <div>
+                                    <span className="text-sm text-[#94A3B8] block">Cost</span>
+                                    <span className="text-[#E5E7EB] font-medium">{vehicle.cost_in_credits} credits</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="space-y-4">
+                        <div>
+                            <h3 className="text-lg font-semibold text-[#F59E0B] mb-3 flex items-center">
+                                <Car className="w-5 h-5 mr-2" />
+                                Performance
+                            </h3>
+                            <div className="space-y-3">
+                                <div>
+                                    <span className="text-sm text-[#94A3B8] block">Max Speed</span>
+                                    <span className="text-[#E5E7EB] font-medium">{vehicle.max_atmosphering_speed} km/h</span>
+                                </div>
+                                <div>
+                                    <span className="text-sm text-[#94A3B8] block">Consumables</span>
+                                    <span className="text-[#E5E7EB] font-medium">{vehicle.consumables}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="space-y-4">
+                        <div>
+                            <h3 className="text-lg font-semibold text-[#10B981] mb-3 flex items-center">
+                                <Truck className="w-5 h-5 mr-2" />
+                                Capacity
+                            </h3>
+                            <div className="space-y-3">
+                                <div>
+                                    <span className="text-sm text-[#94A3B8] block">Crew</span>
+                                    <span className="text-[#E5E7EB] font-medium">{vehicle.crew}</span>
+                                </div>
+                                <div>
+                                    <span className="text-sm text-[#94A3B8] block">Passengers</span>
+                                    <span className="text-[#E5E7EB] font-medium">{vehicle.passengers}</span>
+                                </div>
+                                <div>
+                                    <span className="text-sm text-[#94A3B8] block">Cargo Capacity</span>
+                                    <span className="text-[#E5E7EB] font-medium">{vehicle.cargo_capacity} kg</span>
+                                </div>
+                                <div>
+                                    <span className="text-sm text-[#94A3B8] block">Pilots</span>
+                                    <span className="text-[#E5E7EB] font-medium">{vehicle.pilots.length} known</span>
+                                </div>
+                                <div>
+                                    <span className="text-sm text-[#94A3B8] block">Featured in Films</span>
+                                    <span className="text-[#E5E7EB] font-medium">{vehicle.films.length} movies</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Card>
+        </div>
+    );
+}
