@@ -81,7 +81,7 @@ export default function PlanetsPage() {
 
     return (
         <AppShell title="Planets">
-            <div className="space-y-6">
+            <div className="space-y-4 pb-12">
                 <PageHeader
                     title="Star Wars Planets"
                     loading={loading}
@@ -96,7 +96,7 @@ export default function PlanetsPage() {
                     <LoadingSkeleton />
                 ) : (
                     <>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                             {planets.map((planet) => (
                                 <PlanetCard
                                     key={planet.id}

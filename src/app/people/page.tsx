@@ -81,7 +81,7 @@ export default function PeoplePage() {
 
     return (
         <AppShell title="People">
-            <div className="space-y-6">
+            <div className="space-y-4 pb-12">
                 <PageHeader
                     title="Star Wars Characters"
                     loading={loading}
@@ -96,7 +96,7 @@ export default function PeoplePage() {
                     <LoadingSkeleton />
                 ) : (
                     <>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                             {people.map((person) => (
                                 <PersonCard
                                     key={person.id}

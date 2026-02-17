@@ -16,18 +16,18 @@ export default function PlanetCard({ planet, onClick }: PlanetCardProps) {
 
     return (
         <Card
-            className="card-galactic p-4 cursor-pointer transition-all duration-300 hover:scale-[1.02] relative group"
+            className="card-galactic p-3 cursor-pointer transition-all duration-300 hover:scale-[1.02] relative group"
             onClick={() => onClick(planet)}
         >
-            <div className="flex items-start space-x-4 mb-4">
-                <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${getClimateColor(planet.climate)} flex items-center justify-center shadow-[0_0_20px_rgba(96,165,250,0.3)]`}>
-                    <Globe className="w-8 h-8 text-white" />
+            <div className="flex items-start space-x-3 mb-3">
+                <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${getClimateColor(planet.climate)} flex items-center justify-center shadow-[0_0_20px_rgba(96,165,250,0.3)]`}>
+                    <Globe className="w-6 h-6 text-white" />
                 </div>
                 <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-[#E5E7EB] group-hover:text-[#60A5FA] transition-colors">
+                    <h3 className="text-base font-semibold text-[#E5E7EB] group-hover:text-[#60A5FA] transition-colors">
                         {planet.name}
                     </h3>
-                    <div className="flex items-center space-x-2 mt-2">
+                    <div className="flex items-center space-x-2 mt-1">
                         <Badge variant="secondary" className="text-xs">
                             {planet.climate}
                         </Badge>
@@ -38,7 +38,7 @@ export default function PlanetCard({ planet, onClick }: PlanetCardProps) {
                 </div>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1">
                 <div className="flex justify-between">
                     <span className="text-sm text-[#94A3B8]">Diameter:</span>
                     <span className="text-sm text-[#E5E7EB]">{planet.diameter} km</span>

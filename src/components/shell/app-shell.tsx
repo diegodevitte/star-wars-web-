@@ -17,7 +17,7 @@ export function AppShell({ children, title }: AppShellProps) {
                 <Sidebar />
                 <div className="flex-1 flex flex-col">
                     <Topbar title={title} />
-                    <main className="flex-1 p-4">
+                    <main className="flex-1 p-4 pb-8">
                         {children}
                     </main>
                 </div>

@@ -81,7 +81,7 @@ export default function VehiclesPage() {
 
     return (
         <AppShell title="Vehicles">
-            <div className="space-y-6">
+            <div className="space-y-4 pb-12">
                 <PageHeader
                     title="Star Wars Vehicles"
                     loading={loading}
@@ -96,7 +96,7 @@ export default function VehiclesPage() {
                     <LoadingSkeleton />
                 ) : (
                     <>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                             {vehicles.map((vehicle) => (
                                 <VehicleCard
                                     key={vehicle.id}
