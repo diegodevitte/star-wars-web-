@@ -168,3 +168,13 @@ export interface Starship {
   model: string;
   manufacturer: string;
 }
+
+export interface PersonCardProps {
+    person: NormalizedPerson;
+    onClick: (person: NormalizedPerson) => void;
+}
+
+export interface PersonDetailModalProps {
+    person: NormalizedPerson | null;
+    onClose: () => void;
+}
