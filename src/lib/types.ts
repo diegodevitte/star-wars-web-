@@ -206,3 +206,23 @@ export interface PlanetDetailModalProps {
     planet: NormalizedPlanet | null;
     onClose: () => void;
 }
+
+export interface StarshipCardProps {
+    starship: NormalizedStarship;
+    onClick: (starship: NormalizedStarship) => void;
+}
+
+export interface StarshipDetailModalProps {
+    starship: NormalizedStarship | null;
+    onClose: () => void;
+}
+
+export interface VehicleCardProps {
+    vehicle: NormalizedVehicle;
+    onClick: (vehicle: NormalizedVehicle) => void;
+}
+
+export interface VehicleDetailModalProps {
+    vehicle: NormalizedVehicle | null;
+    onClose: () => void;
+}
