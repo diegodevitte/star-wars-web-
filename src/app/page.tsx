@@ -7,7 +7,8 @@ import { FeaturedCharacter } from "@/components/dashboard/featured-character";
 import { RecentPlanets } from "@/components/dashboard/recent-planets";
 import { PopularStarships } from "@/components/dashboard/popular-starships";
 import { Card } from "@/components/ui/card";
-import { Loader2, AlertTriangle } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
+import { LoadingSkeleton } from "@/components/ui/loading-skeleton";
 import { statsApi, peopleApi, planetsApi, starshipsApi, ApiError } from '@/lib/api-client';
 import { DashboardStats, Character, Planet, Starship } from '@/lib/types';
 
@@ -101,14 +102,7 @@ export default function Dashboard() {
   if (loading) {
     return (
       <AppShell title="Dashboard">
-        <div className="flex items-center justify-center min-h-[400px]">
-          <Card className="card-galactic p-8">
-            <div className="flex items-center space-x-4 text-[#94A3B8]">
-              <Loader2 className="w-8 h-8 animate-spin" />
-              <span className="text-lg">Loading galactic data...</span>
-            </div>
-          </Card>
-        </div>
+        <LoadingSkeleton type="spinner" message="Loading galactic data..." />
       </AppShell>
     );
   }

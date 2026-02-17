@@ -226,3 +226,34 @@ export interface VehicleDetailModalProps {
     vehicle: NormalizedVehicle | null;
     onClose: () => void;
 }
+
+export interface LoadingSkeletonProps {
+    type?: 'spinner' | 'grid';
+    message?: string;
+    count?: number;
+}
+
+export interface PageHeaderProps {
+    title: string;
+    loading: boolean;
+    totalCount: number;
+    countLabel: string;
+    search: string;
+    searchPlaceholder: string;
+    onSearchChange: (value: string) => void;
+}
+
+export interface PaginationProps {
+    currentPage: number;
+    pageLabel: string;
+    hasNext: boolean;
+    hasPrevious: boolean;
+    onPageChange: (page: number) => void;
+}
+
+export interface ErrorStateProps {
+    icon: React.ReactNode;
+    title: string;
+    message: string;
+    onRetry: () => void;
+}
