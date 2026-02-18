@@ -257,3 +257,59 @@ export interface ErrorStateProps {
     message: string;
     onRetry: () => void;
 }
+
+// ========================================
+// Navigation & Shell Components
+// ========================================
+
+export interface NavigationItem {
+    id: string;
+    label: string;
+    href: string;
+    icon: React.ComponentType<{ className?: string }>;
+    active?: boolean;
+}
+
+export interface AppShellProps {
+    children: React.ReactNode;
+    title?: string;
+}
+
+export interface SidebarProps {
+    variant?: 'full' | 'rail';
+}
+
+export interface TopbarProps {
+    title?: string;
+}
+
+// ========================================
+// Dashboard Components
+// ========================================
+
+export interface StatCardProps {
+    icon: React.ComponentType<{ className?: string }>;
+    label: string;
+    value: number;
+    accentColor: string;
+    href: string;
+}
+
+export interface StatsRowProps {
+    stats: DashboardStats;
+}
+
+export interface FeaturedCharacterProps {
+    character: NormalizedPerson;
+    onViewDetails?: () => void;
+}
+
+export interface RecentPlanetsProps {
+    planets: NormalizedPlanet[];
+    onPlanetClick?: (planet: NormalizedPlanet) => void;
+}
+
+export interface PopularStarshipsProps {
+    starships: NormalizedStarship[];
+    onStarshipClick?: (starship: NormalizedStarship) => void;
+}

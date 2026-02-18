@@ -214,18 +214,18 @@ export default function ChatPage() {
 
     return (
         <AppShell title="AI Chat">
-            <div className="flex flex-col h-[calc(100vh-8rem)]">
-                <div className="mb-6">
-                    <h2 className="text-2xl font-bold text-[#E5E7EB] mb-2 flex items-center">
-                        <Bot className="w-6 h-6 mr-3 text-[#60A5FA]" />
+            <div className="flex flex-col h-[calc(100vh-12rem)] sm:h-[calc(100vh-10rem)]">
+                <div className="mb-4 sm:mb-6 flex-shrink-0">
+                    <h2 className="text-xl sm:text-2xl font-bold text-[#E5E7EB] mb-2 flex items-center">
+                        <Bot className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 text-[#60A5FA]" />
                         Galactic AI Assistant
                     </h2>
-                    <p className="text-[#94A3B8]">
+                    <p className="text-sm sm:text-base text-[#94A3B8]">
                         Ask me anything about the Star Wars universe - characters, planets, starships, and more!
                     </p>
                 </div>
 
-                <div className="flex-1 overflow-y-auto mb-6 space-y-4">
+                <div className="flex-1 overflow-y-auto mb-4 sm:mb-6 space-y-4">
                     {messages.map((message) => (
                         <MessageBubble key={message.id} message={message} />
                     ))}
@@ -250,7 +250,7 @@ export default function ChatPage() {
                 </div>
 
                 {messages.length <= 1 && (
-                    <div className="mb-6">
+                    <div className="mb-4 sm:mb-6 flex-shrink-0">
                         <h3 className="text-sm font-medium text-[#94A3B8] mb-3">Suggested Questions:</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                             {SUGGESTED_QUESTIONS.map((question, index) => (
@@ -264,9 +264,9 @@ export default function ChatPage() {
                     </div>
                 )}
 
-                <Card className="card-galactic p-4">
+                <Card className="card-galactic p-3 sm:p-4 flex-shrink-0">
                     <form onSubmit={handleSubmit}>
-                        <div className="flex space-x-3">
+                        <div className="flex space-x-2 sm:space-x-3">
                             <div className="flex-1">
                                 <Input
                                     ref={inputRef}
@@ -288,7 +288,7 @@ export default function ChatPage() {
                                 ) : (
                                     <Send className="w-4 h-4" />
                                 )}
-                                <span>Send</span>
+                                <span className="hidden sm:inline">Send</span>
                             </Button>
                         </div>
                     </form>

@@ -2,16 +2,9 @@
 
 import { Card } from "@/components/ui/card";
 import { Users, Globe, Rocket, Car } from "lucide-react";
-import { DashboardStats } from "@/lib/types";
+import { StatCardProps, StatsRowProps } from "@/lib/types";
 import { useRouter } from "next/navigation";
-
-interface StatCardProps {
-    icon: React.ComponentType<{ className?: string }>;
-    label: string;
-    value: number;
-    accentColor: string;
-    href: string;
-}
+import { useEffect, useRef, useState } from "react";
 
 function StatCard({ icon: Icon, label, value, accentColor, href }: StatCardProps) {
     const router = useRouter();
@@ -31,7 +24,7 @@ function StatCard({ icon: Icon, label, value, accentColor, href }: StatCardProps
 
     return (
         <Card
-            className="card-galactic min-h-24 p-4 flex flex-col justify-between hover:scale-105 transition-transform duration-200 cursor-pointer"
+            className="card-galactic min-h-24 p-4 flex flex-col justify-between hover:scale-105 transition-transform duration-200 cursor-pointer shrink-0 w-full sm:w-auto"
             onClick={handleClick}
         >
             <div className="flex items-center justify-center mb-3">
@@ -52,11 +45,10 @@ function StatCard({ icon: Icon, label, value, accentColor, href }: StatCardProps
     );
 }
 
-interface StatsRowProps {
-    stats: DashboardStats;
-}
-
 export function StatsRow({ stats }: StatsRowProps) {
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const [currentIndex, setCurrentIndex] = useState(0);
+
     const statCards = [
         {
             icon: Users,
@@ -88,18 +80,99 @@ export function StatsRow({ stats }: StatsRowProps) {
         },
     ];
 
+    useEffect(() => {
+        const isMobile = window.innerWidth < 640;
+        if (!isMobile || !scrollRef.current) return;
+
+        const interval = setInterval(() => {
+            setCurrentIndex((prevIndex) => {
+                const nextIndex = (prevIndex + 1) % statCards.length;
+                if (scrollRef.current) {
+                    const cardWidth = scrollRef.current.offsetWidth;
+                    scrollRef.current.scrollTo({
+                        left: nextIndex * cardWidth,
+                        behavior: 'smooth'
+                    });
+                }
+                return nextIndex;
+            });
+        }, 3000);
+
+        return () => clearInterval(interval);
+    }, [statCards.length]);
+
+    useEffect(() => {
+        const scrollContainer = scrollRef.current;
+        if (!scrollContainer) return;
+
+        const handleScroll = () => {
+            const scrollLeft = scrollContainer.scrollLeft;
+            const cardWidth = scrollContainer.offsetWidth;
+            const index = Math.round(scrollLeft / cardWidth);
+            setCurrentIndex(index);
+        };
+
+        scrollContainer.addEventListener('scroll', handleScroll);
+        return () => scrollContainer.removeEventListener('scroll', handleScroll);
+    }, []);
+
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {statCards.map((stat, index) => (
-                <StatCard
-                    key={index}
-                    icon={stat.icon}
-                    label={stat.label}
-                    value={stat.value}
-                    accentColor={stat.accentColor}
-                    href={stat.href}
-                />
-            ))}
-        </div>
+        <>
+            <div className="sm:hidden">
+                <div
+                    ref={scrollRef}
+                    className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+                    style={{ scrollSnapType: 'x mandatory' }}
+                >
+                    {statCards.map((stat, index) => (
+                        <div key={index} className="snap-center w-full flex-shrink-0">
+                            <StatCard
+                                icon={stat.icon}
+                                label={stat.label}
+                                value={stat.value}
+                                accentColor={stat.accentColor}
+                                href={stat.href}
+                            />
+                        </div>
+                    ))}
+                </div>
+
+                <div className="flex justify-center gap-2 mt-4">
+                    {statCards.map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => {
+                                setCurrentIndex(index);
+                                if (scrollRef.current) {
+                                    const cardWidth = scrollRef.current.offsetWidth;
+                                    scrollRef.current.scrollTo({
+                                        left: index * cardWidth,
+                                        behavior: 'smooth'
+                                    });
+                                }
+                            }}
+                            className={`h-2 rounded-full transition-all duration-300 ${currentIndex === index
+                                ? 'w-8 bg-[#60A5FA]'
+                                : 'w-2 bg-[#94A3B8]/30'
+                                }`}
+                            aria-label={`Go to slide ${index + 1}`}
+                        />
+                    ))}
+                </div>
+            </div>
+
+            <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {statCards.map((stat, index) => (
+                    <StatCard
+                        key={index}
+                        icon={stat.icon}
+                        label={stat.label}
+                        value={stat.value}
+                        accentColor={stat.accentColor}
+                        href={stat.href}
+                    />
+                ))}
+            </div>
+        </>
     );
 }

@@ -2,15 +2,14 @@
 
 import { Card } from "@/components/ui/card";
 import { ChevronRight, Rocket } from "lucide-react";
-import { Starship } from "@/lib/types";
+import { NormalizedStarship, PopularStarshipsProps } from "@/lib/types";
 
-interface PopularStarshipsProps {
-    starships: Starship[];
-}
-
-function StarshipCard({ starship }: { starship: Starship }) {
+function StarshipCard({ starship, onClick }: { starship: NormalizedStarship; onClick: () => void }) {
     return (
-        <Card className="card-galactic p-0 h-[180px] overflow-hidden cursor-pointer group transition-all duration-300 hover:border-[#60A5FA] hover:shadow-lg hover:shadow-[#60A5FA]/20 hover:-translate-y-1">
+        <Card
+            onClick={onClick}
+            className="card-galactic p-0 h-[180px] overflow-hidden cursor-pointer group transition-all duration-300 hover:border-[#60A5FA] hover:shadow-lg hover:shadow-[#60A5FA]/20 hover:-translate-y-1"
+        >
             <div className="h-[120px] bg-gradient-to-br from-[#60A5FA] to-[#2DD4BF] flex items-center justify-center relative overflow-hidden">
                 <div className="relative w-16 h-16 flex items-center justify-center">
                     <Rocket className="w-7 h-7 text-[#0B1020]/80 transform rotate-45" />
@@ -41,16 +40,24 @@ function StarshipCard({ starship }: { starship: Starship }) {
     );
 }
 
-export function PopularStarships({ starships }: PopularStarshipsProps) {
+export function PopularStarships({ starships, onStarshipClick }: PopularStarshipsProps) {
     return (
         <Card className="card-galactic p-6">
             <h3 className="text-base font-semibold text-[#E5E7EB] mb-4">
                 Popular Starships
             </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="sm:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 -mx-6 px-6 scrollbar-hide">
                 {starships.map((starship) => (
-                    <StarshipCard key={starship.id} starship={starship} />
+                    <div key={starship.id} className="snap-start shrink-0 w-[220px]">
+                        <StarshipCard starship={starship} onClick={() => onStarshipClick?.(starship)} />
+                    </div>
+                ))}
+            </div>
+
+            <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+                {starships.map((starship) => (
+                    <StarshipCard key={starship.id} starship={starship} onClick={() => onStarshipClick?.(starship)} />
                 ))}
             </div>
         </Card>

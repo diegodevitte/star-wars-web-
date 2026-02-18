@@ -214,3 +214,12 @@ body {
     0 0 16px #00ffaa,
     0 0 24px #00ffaa;
 }
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

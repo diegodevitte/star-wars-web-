@@ -11,16 +11,15 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { NavigationItem, SidebarProps } from "@/lib/types";
 
-interface SidebarItem {
-    id: string;
-    label: string;
-    href: string;
-    icon: React.ComponentType<{ className?: string }>;
-    active?: boolean;
-}
-
-const navigationItems: SidebarItem[] = [
+const navigationItems: NavigationItem[] = [
     {
         id: "dashboard",
         label: "Dashboard",
@@ -60,8 +59,55 @@ const navigationItems: SidebarItem[] = [
     },
 ];
 
-export function Sidebar() {
+export function Sidebar({ variant = 'full' }: SidebarProps) {
     const pathname = usePathname();
+    const isRail = variant === 'rail';
+
+    if (isRail) {
+        return (
+            <TooltipProvider delayDuration={0}>
+                <div className="w-[72px] h-screen sticky top-0 glass-sidebar flex flex-col py-6 items-center">
+                    <div className="mb-8 text-center">
+                        <div className="text-[18px] font-bold text-[#E5E7EB]">
+                            GC
+                        </div>
+                        <div className="w-8 h-[3px] bg-[#00D4FF] rounded-full mt-1 shadow-[0_0_8px_#00D4FF]"></div>
+                    </div>
+
+                    <nav className="flex-1 w-full">
+                        <div className="space-y-2 px-2">
+                            {navigationItems.map((item) => {
+                                const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+                                const Icon = item.icon;
+
+                                return (
+                                    <Tooltip key={item.id}>
+                                        <TooltipTrigger asChild>
+                                            <Link
+                                                href={item.href}
+                                                className={cn(
+                                                    "flex items-center justify-center h-11 w-full rounded-xl transition-all duration-200 relative",
+                                                    isActive
+                                                        ? "bg-[#60A5FA]/10 text-[#60A5FA] border border-[#60A5FA]/30"
+                                                        : "text-[#94A3B8] hover:bg-white/5 hover:text-[#E5E7EB]"
+                                                )}
+                                                aria-label={item.label}
+                                            >
+                                                <Icon className="w-5 h-5" />
+                                            </Link>
+                                        </TooltipTrigger>
+                                        <TooltipContent side="right" className="glass-sidebar border-[#1F2937]/80">
+                                            <p>{item.label}</p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                );
+                            })}
+                        </div>
+                    </nav>
+                </div>
+            </TooltipProvider>
+        );
+    }
 
     return (
         <div className="w-[260px] h-screen sticky top-0 glass-sidebar flex flex-col py-6 px-5">
@@ -81,7 +127,7 @@ export function Sidebar() {
             <nav className="flex-1">
                 <div className="space-y-3">
                     {navigationItems.map((item) => {
-                        const isActive = pathname === item.href;
+                        const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
                         const Icon = item.icon;
 
                         return (

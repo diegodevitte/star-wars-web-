@@ -3,13 +3,9 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { User } from "lucide-react";
-import { Character } from "@/lib/types";
+import { FeaturedCharacterProps } from "@/lib/types";
 
-interface FeaturedCharacterProps {
-    character: Character;
-}
-
-export function FeaturedCharacter({ character }: FeaturedCharacterProps) {
+export function FeaturedCharacter({ character, onViewDetails }: FeaturedCharacterProps) {
     return (
         <Card className="card-galactic p-6">
             <h3 className="text-sm font-semibold text-[#E5E7EB] mb-6">
@@ -40,6 +36,7 @@ export function FeaturedCharacter({ character }: FeaturedCharacterProps) {
             </div>
 
             <Button
+                onClick={onViewDetails}
                 className={`
                     w-full 
                     bg-[#60A5FA] 
