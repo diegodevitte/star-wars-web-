@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MessageSquare, Send, Bot, User, Loader2, Home, Users, Globe, Rocket } from 'lucide-react';
 import { chatApi, ApiError } from '@/lib/api-client';
-import { ChatRequest, Message, MessageBubbleProps, SuggestedQuestionProps } from '@/lib/types';
+import { ChatRequest, Message, MessageBubbleProps } from '@/lib/types';
 
 const MessageBubble = ({ message }: MessageBubbleProps) => {
     const isUser = message.role === 'user';
@@ -92,30 +92,6 @@ const MessageBubble = ({ message }: MessageBubbleProps) => {
         </div>
     );
 }
-
-const SuggestedQuestion = ({ question, onClick }: SuggestedQuestionProps) => {
-    return (
-        <Button
-            variant="outline"
-            size="sm"
-            onClick={() => onClick(question)}
-            className="text-left h-auto p-3 whitespace-normal text-[#94A3B8] hover:text-[#E5E7EB] hover:border-[#60A5FA] transition-colors"
-        >
-            {question}
-        </Button>
-    );
-}
-
-const SUGGESTED_QUESTIONS = [
-    "Tell me about Luke Skywalker",
-    "What planets are featured in Star Wars?",
-    "Show me information about the Millennium Falcon",
-    "Who are the main characters in the original trilogy?",
-    "What vehicles are used in the Battle of Hoth?",
-    "Compare Tatooine and Alderaan",
-    "List all Death Star appearances",
-    "Tell me about Imperial starship classes"
-];
 
 export default function ChatPage() {
     const [messages, setMessages] = useState<Message[]>([]);
@@ -201,10 +177,6 @@ export default function ChatPage() {
         sendMessage(input);
     };
 
-    const handleSuggestedQuestion = (question: string) => {
-        sendMessage(question);
-    };
-
     const handleKeyPress = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
@@ -214,8 +186,8 @@ export default function ChatPage() {
 
     return (
         <AppShell title="AI Chat">
-            <div className="flex flex-col h-[calc(100vh-12rem)] sm:h-[calc(100vh-10rem)]">
-                <div className="mb-4 sm:mb-6 flex-shrink-0">
+            <div className="flex flex-col h-full">
+                <div className="mb-3 sm:mb-4 flex-shrink-0">
                     <h2 className="text-xl sm:text-2xl font-bold text-[#E5E7EB] mb-2 flex items-center">
                         <Bot className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 text-[#60A5FA]" />
                         Galactic AI Assistant
@@ -225,7 +197,7 @@ export default function ChatPage() {
                     </p>
                 </div>
 
-                <div className="flex-1 overflow-y-auto mb-4 sm:mb-6 space-y-4">
+                <div className="flex-1 overflow-y-auto pb-24 sm:pb-28 space-y-4 min-h-0">
                     {messages.map((message) => (
                         <MessageBubble key={message.id} message={message} />
                     ))}
@@ -249,56 +221,43 @@ export default function ChatPage() {
                     <div ref={messagesEndRef} />
                 </div>
 
-                {messages.length <= 1 && (
-                    <div className="mb-4 sm:mb-6 flex-shrink-0">
-                        <h3 className="text-sm font-medium text-[#94A3B8] mb-3">Suggested Questions:</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            {SUGGESTED_QUESTIONS.map((question, index) => (
-                                <SuggestedQuestion
-                                    key={index}
-                                    question={question}
-                                    onClick={handleSuggestedQuestion}
-                                />
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                <Card className="card-galactic p-3 sm:p-4 flex-shrink-0">
-                    <form onSubmit={handleSubmit}>
-                        <div className="flex space-x-2 sm:space-x-3">
-                            <div className="flex-1">
-                                <Input
-                                    ref={inputRef}
-                                    value={input}
-                                    onChange={(e) => setInput(e.target.value)}
-                                    onKeyPress={handleKeyPress}
-                                    placeholder="Ask me about the Star Wars universe..."
-                                    className="w-full"
-                                    disabled={loading}
-                                />
+                <div className="fixed bottom-16 left-0 right-0 sm:bottom-4 sm:left-[72px] sm:right-0 lg:left-[260px] p-4 z-20">
+                    <Card className="card-galactic p-3 sm:p-4">
+                        <form onSubmit={handleSubmit}>
+                            <div className="flex space-x-2 sm:space-x-3">
+                                <div className="flex-1">
+                                    <Input
+                                        ref={inputRef}
+                                        value={input}
+                                        onChange={(e) => setInput(e.target.value)}
+                                        onKeyPress={handleKeyPress}
+                                        placeholder="Ask me about the Star Wars universe..."
+                                        className="w-full"
+                                        disabled={loading}
+                                    />
+                                </div>
+                                <Button
+                                    type="submit"
+                                    disabled={loading || !input.trim()}
+                                    className="bg-[#60A5FA] hover:bg-[#3B82F6] text-[#0B1020] flex items-center space-x-2"
+                                >
+                                    {loading ? (
+                                        <Loader2 className="w-4 h-4 animate-spin" />
+                                    ) : (
+                                        <Send className="w-4 h-4" />
+                                    )}
+                                    <span className="hidden sm:inline">Send</span>
+                                </Button>
                             </div>
-                            <Button
-                                type="submit"
-                                disabled={loading || !input.trim()}
-                                className="bg-[#60A5FA] hover:bg-[#3B82F6] text-[#0B1020] flex items-center space-x-2"
-                            >
-                                {loading ? (
-                                    <Loader2 className="w-4 h-4 animate-spin" />
-                                ) : (
-                                    <Send className="w-4 h-4" />
-                                )}
-                                <span className="hidden sm:inline">Send</span>
-                            </Button>
-                        </div>
-                    </form>
+                        </form>
 
-                    {error && (
-                        <div className="mt-2 text-sm text-red-400">
-                            {error}
-                        </div>
-                    )}
-                </Card>
+                        {error && (
+                            <div className="mt-2 text-sm text-red-400">
+                                {error}
+                            </div>
+                        )}
+                    </Card>
+                </div>
             </div>
         </AppShell>
     );

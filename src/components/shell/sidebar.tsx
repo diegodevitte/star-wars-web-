@@ -66,7 +66,7 @@ export function Sidebar({ variant = 'full' }: SidebarProps) {
     if (isRail) {
         return (
             <TooltipProvider delayDuration={0}>
-                <div className="w-[72px] h-screen sticky top-0 glass-sidebar flex flex-col py-6 items-center">
+                <div className="w-[72px] h-screen fixed top-0 left-0 glass-sidebar flex flex-col py-6 items-center z-20">
                     <div className="mb-8 text-center">
                         <div className="text-[18px] font-bold text-[#E5E7EB]">
                             GC
@@ -110,7 +110,7 @@ export function Sidebar({ variant = 'full' }: SidebarProps) {
     }
 
     return (
-        <div className="w-[260px] h-screen sticky top-0 glass-sidebar flex flex-col py-6 px-5">
+        <div className="w-[260px] h-screen fixed top-0 left-0 glass-sidebar flex flex-col py-6 px-5 z-20">
             <div className="mb-8 text-center">
                 <div className="text-[22px] font-semibold uppercase tracking-widest text-[#E5E7EB]">
                     GALACTIC
